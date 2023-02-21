@@ -12,7 +12,7 @@ function onSubmit(evt) {
   const step = Number(form.elements.step.value);
   
   
-  for (let i = 1, int = delay + step; i <= amount; i += 1, int += step) {
+  for (let i = 1, int = delay; i <= amount; i += 1, int += step) {
     setTimeout(() => {
         createPromise(i, int)
           .then(({ position, delay }) => {
