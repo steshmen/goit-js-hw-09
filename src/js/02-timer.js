@@ -8,6 +8,7 @@ const days = document.querySelector('span[data-days]');
 const hours = document.querySelector('span[data-hours]');
 const minutes = document.querySelector('span[data-minutes]');
 const seconds = document.querySelector('span[data-seconds]');
+let intervalId = null;
 
 startBtn.setAttribute('disabled', true);
 let time = {};
@@ -34,14 +35,17 @@ flatpickr("#datetime-picker", options);
 startBtn.addEventListener('click', onStart);
 
 function onStart() {
-    setInterval(() => {
+
+    intervalId = setInterval(() => {
         const currentTime = time - Date.now();
         days.textContent = addLeadingZero(convertMs(currentTime).days);
         hours.textContent = addLeadingZero(convertMs(currentTime).hours);
-        minutes.textContent = addLeadingZero( convertMs(currentTime).minutes);
+        minutes.textContent = addLeadingZero(convertMs(currentTime).minutes);
         seconds.textContent = addLeadingZero(convertMs(currentTime).seconds);
-    }, 1000)
-
+        if (currentTime < 1000) {
+             clearInterval(intervalId);
+        }
+    }, 1000);
 }
 
 function convertMs(ms) {
